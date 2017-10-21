@@ -7,33 +7,36 @@ const initDeck = {
 function deck (state = initDeck, action){
   switch (action.type) {
     case RECEIVE_DECKS:
-      return action.list
+      const list = action.payload
+      return list
         ? {
             ...state,
-            ['list']: JSON.parse(action.list)
+            ['list']: JSON.parse(list)
           }
         : state
     case ADD_DECK:
+      const title = action.payload
       return {
         ...state,
         list: {
           ...state.list,
-          [action.title]: {
-            title: action.title,
+          [title]: {
+            title,
             questions: []
           }
         }
       }
     case ADD_QUESTION:
+      const { question, answer, deckId } = action.payload
       return {
         ...state,
         list: {
           ...state.list,
-          [action.deckId]: {
-            ...state.list[action.deckId],
+          [deckId]: {
+            ...state.list[deckId],
             questions: [
-              ...state.list[action.deckId].questions,
-              {question: action.question, answer: action.answer}
+              ...state.list[deckId].questions,
+              {question, answer}
             ]
           }
         }

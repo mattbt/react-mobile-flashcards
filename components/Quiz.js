@@ -36,23 +36,15 @@ class Quiz extends Component {
 
   correctAnswer() {
     this.checkQuizEnd()
-    this.setState((state) => {
-      return {
-        ...state,
-        ['currentQuestion']: state.currentQuestion + 1,
-        ['correctCount']: state.correctCount + 1
-      }
-    })
+    this.setState((state) => ({
+      currentQuestion: state.currentQuestion + 1,
+      correctCount: state.correctCount + 1
+    }))
     this.flipCard()
   }
   incorrectAnswer() {
     this.checkQuizEnd()
-    this.setState((state) => {
-      return {
-        ...state,
-        ['currentQuestion']: state.currentQuestion + 1
-      }
-    })
+    this.setState((state) => ({currentQuestion: state.currentQuestion + 1}))
     this.flipCard()
   }
 
@@ -66,26 +58,30 @@ class Quiz extends Component {
         .then(setLocalNotification)
     }
   }
+  resetQuiz(){
+    Animated.spring(this.animatedValue,{
+      toValue: 0,
+      friction: 7,
+      tension: 2
+    }).start();
+    this.setState({
+      currentView: 'front',
+      currentQuestion: 0,
+      correctCount: 0
+    })
+  }
 
-  flipCard() {
+  flipCard = () => {
     const { currentView } = this.state
+    const isBack = (currentView === 'back')
 
-    if (currentView === 'back') {
+    this.setState({ currentView: isBack ? 'front' : 'back' })
 
-      this.setState((state) => {return {...state, ['currentView']: 'front'}})
-      Animated.spring(this.animatedValue,{
-        toValue: 0,
-        friction: 7,
-        tension: 2
-      }).start();
-    } else {
-      this.setState((state) => {return {...state, ['currentView']: 'back'}})
-      Animated.spring(this.animatedValue,{
-        toValue: 180,
-        friction: 7,
-        tension: 2
-      }).start();
-    }
+    Animated.spring(this.animatedValue, {
+      toValue: isBack ? 0 : 180,
+      friction: 7,
+      tension: 2
+    }).start()
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -133,7 +129,7 @@ class Quiz extends Component {
             </View>
             { currentView === 'front' &&
               <CustomButton
-                onPress={() => this.flipCard()}
+                onPress={this.flipCard}
                 disabled={false}
                 style={{backgroundColor: purple}}
                 >View Answer</CustomButton>
@@ -153,26 +149,41 @@ class Quiz extends Component {
                   >Incorrect</CustomButton>
               </View>
             }
+
           </View>
         }
 
         {(currentQuestion === qnum) &&
-          (correctCount < (qnum/2)
-          ? <View style={styles.center}>
-              <Text style={[styles.resultSubTitle, {color: red}]}>Not so well</Text>
-              <Text style={[styles.resultTitle, {color: red}]}>
-                {Math.ceil((correctCount * 100) / qnum)} %
-              </Text>
-              <Text>{correctCount} / {qnum} correct</Text>
-            </View>
-          : <View style={styles.center}>
-              <Text style={styles.resultSubTitle}>Good job!</Text>
-              <Text style={styles.resultTitle}>
-                {Math.ceil((correctCount * 100) / qnum)} %
-              </Text>
-              <Text>{correctCount} / {qnum} correct</Text>
-            </View>)
-        }
+          (<View style={styles.center}>
+            {correctCount < (qnum/2)
+            ? <View style={styles.center}>
+                <Text style={[styles.resultSubTitle, {color: red}]}>Not so well</Text>
+                <Text style={[styles.resultTitle, {color: red}]}>
+                  {Math.ceil((correctCount * 100) / qnum)} %
+                </Text>
+                <Text>{correctCount} / {qnum} correct</Text>
+              </View>
+            : <View style={styles.center}>
+                <Text style={styles.resultSubTitle}>Good job!</Text>
+                <Text style={styles.resultTitle}>
+                  {Math.ceil((correctCount * 100) / qnum)} %
+                </Text>
+                <Text>{correctCount} / {qnum} correct</Text>
+              </View>}
+            <CustomButton
+              onPress={() => this.resetQuiz()}
+              disabled={false}
+              style={{marginTop: 5}}
+            >Restart Quiz</CustomButton>
+            <CustomButton
+              onPress={() => this.props.navigation.navigate(
+                'IndividualDeck',
+                {deckId: currentDeck.title},
+              )}
+              disabled={false}
+              style={{backgroundColor: purple, margin: 5}}
+            >Back</CustomButton>
+          </View>)}
       </View>
     );
   }

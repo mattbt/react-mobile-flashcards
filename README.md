@@ -30,5 +30,6 @@ This project is part of Udacity React Nanodegree Program.
 | By selecting a deck from deck list user gets to deck detail page. <br>Here it is possible to choose wheter to take the quiz or add a new question. | ![Deck Detail](/screenshots/img3.png?raw=true) |
 | User could add a new question to the deck by entering question and answer |![New Question](/screenshots/img8.png?raw=true)|
 | When user takes a quiz, all questions contained in the deck are prompted, one by one;<br> user guess an answer, then check the correct one <br> (card flips) and decide whether it was a correct guess or not. | ![Quiz](/screenshots/img4.png?raw=true&)|
-| When all questions are done, user gets quiz result.| ![Quiz Result](/screenshots/img6.png?raw=true)|
+| When all questions are done, user gets quiz result. User could take the quiz again or go back to deck detail page.| ![Quiz Result](/screenshots/img7.png?raw=true)|
+
 User receives a push notification reminder each day at 5pm if no quiz has been completed for the day.

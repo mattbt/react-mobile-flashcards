@@ -5,20 +5,22 @@ export const ADD_QUESTION = 'ADD_QUESTION'
 export function receiveDecks(list){
   return {
     type: RECEIVE_DECKS,
-    list
+    payload: list
   }
 }
 export function addDeck(title){
   return {
     type: ADD_DECK,
-    title
+    payload: title
   }
 }
 export function addQuestion(question, answer, deckId){
   return {
     type: ADD_QUESTION,
-    question,
-    answer,
-    deckId
+    payload: {
+      question,
+      answer,
+      deckId
+    }
   }
 }

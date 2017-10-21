@@ -12,16 +12,14 @@ class DeckList extends Component {
   state = {
     ready: false
   }
-  componentDidMount(){
-      const { dispatch } = this.props
 
-      getDecks()
-        .then((list) => {
-          dispatch(receiveDecks(list))
-        })
-        .then(() => this.setState(() => ({
-          ready: true
-        })))
+  componentDidMount(){
+    const { dispatch } = this.props
+    getDecks()
+      .then((list) => {
+        dispatch(receiveDecks(list))
+      })
+      .then(() => this.setState({ready: true}))
   }
 
   render(){
@@ -37,16 +35,16 @@ class DeckList extends Component {
         { 0 === decklist.length
           ? <Text style={styles.noDecks}>No decks found</Text>
           : decklist.map((deck) => (
-              <TouchableOpacity
-                style={styles.item}
-                key={deck.title}
-                onPress={() => this.props.navigation.navigate(
-                  'IndividualDeck',
-                  { deckId: deck.title }
-                )}>
-                <DeckCard deck={deck} />
-              </TouchableOpacity>
-            ))
+            <TouchableOpacity
+              style={styles.item}
+              key={deck.title}
+              onPress={() => this.props.navigation.navigate(
+                'IndividualDeck',
+                { deckId: deck.title }
+              )}>
+              <DeckCard deck={deck} />
+            </TouchableOpacity>
+          ))
         }
       </ScrollView>
     )

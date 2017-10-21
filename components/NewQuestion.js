@@ -31,10 +31,7 @@ class NewQuestion extends Component {
     // Update Redux
     dispatch(addQuestion(question, answer, deckId))
 
-    this.setState(() => ({
-      question: '',
-      answer: ''
-    }))
+    this.setState({question: '',answer: ''})
 
     // Navigate to Home
     this.toDeck()
@@ -53,13 +50,13 @@ class NewQuestion extends Component {
         <Text style={styles.inputLabel}>Question</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => this.setState((state) => {return{...state, ['question']: text} })}
+          onChangeText={(text) => this.setState({question: text})}
           value={question}
         />
         <Text style={styles.inputLabel}>Answer</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => this.setState((state) => {return{...state, ['answer']: text} })}
+          onChangeText={(text) => this.setState({answer: text})}
           value={answer}
         />
         <CustomButton onPress={this.addQuestion} disabled={(question === '') || (answer === '')}>Add Question</CustomButton>

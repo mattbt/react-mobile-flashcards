@@ -23,11 +23,11 @@ class NewDeck extends Component {
     // Update Redux
     dispatch(addDeck(title))
 
-    this.setState(() => ({
+    this.setState({
       title: '',
       submitDisabled: true,
       error: ''
-    }))
+    })
 
     // Navigate to Home
     this.toHome()
@@ -61,7 +61,7 @@ class NewDeck extends Component {
         <Text style={styles.inputLabel}>Title</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => this.titleChanged(text)}
+          onChangeText={this.titleChanged}
           value={title}
         />
         <CustomButton onPress={this.submit} disabled={submitDisabled}>Save Deck</CustomButton>
