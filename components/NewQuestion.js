@@ -49,12 +49,14 @@ class NewQuestion extends Component {
       <ScrollView style={styles.container}>
         <Text style={styles.inputLabel}>Question</Text>
         <TextInput
+          underlineColorAndroid={'transparent'}
           style={styles.input}
           onChangeText={(text) => this.setState({question: text})}
           value={question}
         />
         <Text style={styles.inputLabel}>Answer</Text>
         <TextInput
+          underlineColorAndroid={'transparent'}
           style={styles.input}
           onChangeText={(text) => this.setState({answer: text})}
           value={answer}

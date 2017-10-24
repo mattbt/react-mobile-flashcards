@@ -60,6 +60,7 @@ class NewDeck extends Component {
       <View style={styles.container}>
         <Text style={styles.inputLabel}>Title</Text>
         <TextInput
+          underlineColorAndroid={'transparent'}
           style={styles.input}
           onChangeText={this.titleChanged}
           value={title}
